@@ -40648,6 +40648,10 @@ var LinkAnnotation = (function LinkAnnotationClosure() {
       switch (linkType) {
         case 'URI':
           url = action.get('URI');
+          // check for ghsts links
+          if (url.indexOf('ghsts://') === 0) {
+            data.ghsts = url;
+          }
           if (isName(url)) {
             // Some bad PDFs do not put parentheses around relative URLs.
             url = '/' + url.name;

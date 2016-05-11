@@ -4526,6 +4526,8 @@ var LinkAnnotationElement = (function LinkAnnotationElementClosure() {
       if (!this.data.url) {
         if (this.data.action) {
           this._bindNamedAction(link, this.data.action);
+        } else if (this.data.ghsts) {
+          this._bindGhstsLink(link, this.data.ghsts);		
         } else {
           this._bindLink(link, (this.data.dest || null));
         }
@@ -4556,6 +4558,27 @@ var LinkAnnotationElement = (function LinkAnnotationElementClosure() {
       if (destination) {
         link.className = 'internalLink';
       }
+    },
+
+    /**
+     * Bind internal links to a GHSTS document.
+     *
+     * @private
+     * @param {Object} link
+     * @param {Object} ghsts
+     * @memberof LinkAnnotationElement
+     */
+    _bindGhstsLink: function LinkAnnotationElement_bindGhstsLink(link, ghsts) {
+      var self = this;
+		
+      link.href = ghsts;
+      link.onclick = function() {
+		if (window.parent && window.parent.viewerAPI && window.parent.viewerAPI.openPdfGhstsLink) {
+			window.parent.viewerAPI.openPdfGhstsLink(ghsts);
+		}
+        return false;
+      };
+	  link.className = 'internalLink';
     },
 
     /**
