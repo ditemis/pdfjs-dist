@@ -4573,8 +4573,8 @@ var LinkAnnotationElement = (function LinkAnnotationElementClosure() {
 		
       link.href = ghsts;
       link.onclick = function() {
-		if (window.parent && window.parent.viewerAPI && window.parent.viewerAPI.openPdfGhstsLink) {
-			window.parent.viewerAPI.openPdfGhstsLink(ghsts);
+		if (window.parent && window.parent.pdfViewerAPI && window.parent.pdfViewerAPI.openPdfGhstsLink) {
+			window.parent.pdfViewerAPI.openPdfGhstsLink(ghsts);
 		}
         return false;
       };
