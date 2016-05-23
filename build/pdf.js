@@ -4573,9 +4573,9 @@ var LinkAnnotationElement = (function LinkAnnotationElementClosure() {
 		
       link.href = ghsts;
       link.onclick = function() {
-		if (window.parent && window.parent.pdfViewerAPI && window.parent.pdfViewerAPI.openPdfGhstsLink) {
-			window.parent.pdfViewerAPI.openPdfGhstsLink(ghsts);
-		}
+		if (window.GhstsLinker) {
+		    window.GhstsLinker.openLink(ghsts);
+	    }
         return false;
       };
 	  link.className = 'internalLink';
