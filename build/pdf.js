@@ -4527,6 +4527,7 @@ var LinkAnnotationElement = (function LinkAnnotationElementClosure() {
         if (this.data.action) {
           this._bindNamedAction(link, this.data.action);
         } else if (this.data.ghsts) {
+          this.container.className += ' ghsts-link-container';
           this._bindGhstsLink(link, this.data.ghsts);		
         } else {
           this._bindLink(link, (this.data.dest || null));
@@ -4578,7 +4579,11 @@ var LinkAnnotationElement = (function LinkAnnotationElementClosure() {
 	    }
         return false;
       };
-	  link.className = 'internalLink';
+
+      link.className = 'internalLink ghsts-link';
+      if (window.GhstsLinker && !window.GhstsLinker.getLinkedDocument(ghsts)) {
+        link.className += ' ghsts-link-unavailable';        
+      }
     },
 
     /**
