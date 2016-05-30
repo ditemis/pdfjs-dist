@@ -40667,6 +40667,7 @@ var LinkAnnotation = (function LinkAnnotationClosure() {
           break;
 
         case 'GoToR':
+          data.type = 'GoToR';
           var urlDict = action.get('F');
           if (isDict(urlDict)) {
             // We assume that we found a FileSpec dictionary
@@ -40706,7 +40707,12 @@ var LinkAnnotation = (function LinkAnnotationClosure() {
     }
 
     if (url) {
-      if (isValidUrl(url, /* allowRelative = */ false)) {
+      // we process GoToR links ourselves for GHSTS, so we allow relative links
+      var allowRelative = false;
+      if (data.type === 'GoToR') {
+        allowRelative = true;
+      }
+      if (isValidUrl(url, /* allowRelative = */ allowRelative)) {
         data.url = tryConvertUrlEncoding(url);
       }
     }

@@ -4532,10 +4532,38 @@ var LinkAnnotationElement = (function LinkAnnotationElementClosure() {
         } else {
           this._bindLink(link, (this.data.dest || null));
         }
+      } else if (this.data.type === 'GoToR') {
+        this.container.className += ' ghsts-link-container';
+        this._bindGhstsGoToRLink(link, this.data.url);
       }
 
       this.container.appendChild(link);
       return this.container;
+    },
+
+    /**
+     * Bind internal links to a GHSTS document for GoToR actions.
+     *
+     * @private
+     * @param {Object} link
+     * @param {Object} url
+     * @memberof LinkAnnotationElement
+     */
+    _bindGhstsGoToRLink: function LinkAnnotationElement_bindGhstsGoToRLink(link, url) {
+      var self = this;
+    
+      link.href = 'ghsts://' + url;
+      link.onclick = function() {
+        if (window.GhstsLinker) {
+          window.GhstsLinker.openGoToRLink(url);
+        }
+        return false;
+      };
+
+      link.className = 'internalLink ghsts-link';
+      if (window.GhstsLinker && !window.GhstsLinker.getLinkedGoToRDocument(url)) {
+        link.className += ' ghsts-link-unavailable';        
+      }
     },
 
     /**
